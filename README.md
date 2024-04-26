@@ -4,7 +4,7 @@ a novel real-time model in semantic segmentation
 DSNet-Base:
   
   imagenet: 链接：https://pan.baidu.com/s/1acGfjtF1eHb3hNxyHcsJTA?pwd=a123 
-  提取码：a123
+  提取码：a123      https://drive.google.com/file/d/1hr9BlqgI4t4djibyj1fCW2LTMvlFFDWP/view?usp=sharing
   
   ADE20K: 43.44%mIOU: 链接：https://pan.baidu.com/s/1TKBFtCj6gwMq97NjYsmPOQ?pwd=a123 
   提取码：a123
