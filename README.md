@@ -1,7 +1,7 @@
 # DSNet
 a novel real-time model in semantic segmentation
 
-DSNet:
+DSNet-Base:
 imagenet: 链接：https://pan.baidu.com/s/1acGfjtF1eHb3hNxyHcsJTA?pwd=a123 
 提取码：a123
 ADE20K: 43.44%mIOU: 链接：https://pan.baidu.com/s/1TKBFtCj6gwMq97NjYsmPOQ?pwd=a123 
