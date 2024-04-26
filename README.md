@@ -1,6 +1,14 @@
 # DSNet
 a novel real-time model in semantic segmentation
 
+This is the implementation for DSNet. 
+
+environment:
+  PyTroch 1.10 python 3.8
+  pip install -r requirements.txt
+
+
+
 DSNet-Base:
   
   imagenet: Baidu drive：https://pan.baidu.com/s/1acGfjtF1eHb3hNxyHcsJTA?pwd=a123 google drive: https://drive.google.com/file/d/1LqmgL4thNJFcMWRYaXJUFNTy2y5FvZ8E/view?usp=sharing
