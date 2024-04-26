@@ -260,7 +260,7 @@ def main():
                   epoch_iters, base_lr, num_iters,
                   trainloader, optimizer, model, writer_dict)
 
-        if flag_rm == 1 or (epoch % 2 == 0 and epoch <= 150)  or (epoch % 20 == 0 and epoch > 50 and epoch <= 380)  or (epoch>380 and epoch % 2 == 0) and (epoch>420): 
+        if flag_rm == 1 or (epoch % 2 == 0 and epoch <= 150)  or  (epoch>200): 
             valid_loss, mean_IoU, IoU_array = validate(config, 
                         testloader, model, writer_dict)
 
