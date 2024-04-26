@@ -18,7 +18,7 @@ DSNet-Base:
 DSNet:
 
   imagenet pretrained weight: Baidu drive：https://pan.baidu.com/s/1wMPH5ZNKwHIyFJ6Pp9-n2w?pwd=a123 
-                              google drive: 
+                              google drive: https://drive.google.com/file/d/1Cb3nd69IjQjjK_r8jXSMON4cHQ76MWbR/view?usp=sharing
   
   ADE20k 40.0%mIOU: Baidu drive：https://pan.baidu.com/s/17CH66GTI2YEXMq7eXnK0xQ?pwd=a123 
                     google drive: https://drive.google.com/file/d/1J-qf5blQ71HGy4EStqMMg-NT1sO1CyUV/view?usp=sharing
