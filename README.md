@@ -55,3 +55,5 @@ This implementation is based on [HRNet-Semantic-Segmentation](https://github.com
   
   BDD10K 62.8%mIOU: [ Baidu drive](https://pan.baidu.com/s/1tPQHC1LTE6tlueXvabU1-Q?pwd=a123), [google drive](https://drive.google.com/file/d/192T2dauq_cA1bBkmiRwYKWdYw27lxZIG/view?usp=sharing)
 
+  Cityscapes : 80.4%mIOU:[google drive](https://drive.google.com/file/d/1UmG7qaMz9BXR4hXxvIoJJ9k_N9JVuUQy/view?usp=sharing)
+
