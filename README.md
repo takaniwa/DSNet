@@ -46,6 +46,7 @@ This implementation is based on [HRNet-Semantic-Segmentation](https://github.com
                       
   Camvid: 83.32%mIOU: [ Baidu drive](https://pan.baidu.com/s/1Q-e-_s-vsgn14S8GoBoTlA?pwd=a123), [google drive](https://drive.google.com/file/d/141889Jei9rcgJ9wSiFF8rNvUDUiV8SqI/view?usp=sharing)           
 
+  Cityscapes : 82.0%mIOU:[google drive](https://drive.google.com/file/d/17SpPO3tsusB9JngjfnJFWzxffCoQRc9z/view?usp=sharing)
 ### DSNet:
 
   DSNet_imagenet: [ Baidu drive](https://pan.baidu.com/s/1wMPH5ZNKwHIyFJ6Pp9-n2w?pwd=a123), [google drive](https://drive.google.com/file/d/1Cb3nd69IjQjjK_r8jXSMON4cHQ76MWbR/view?usp=sharing)
