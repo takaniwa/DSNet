@@ -17,7 +17,7 @@ DATASET:
 MODEL:
   NAME: 'dsnet_m'
   NUM_OUTPUTS: 3
-  PRETRAINED: "/root/output/cityscapes/dhs_base_cityscapes/best_dhs_base_cityscapes_ 0.817536.pth.tar"
+  PRETRAINED: ""
 LOSS:
   USE_OHEM: true
   OHEMTHRES: 0.9
