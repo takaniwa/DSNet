@@ -12,7 +12,7 @@ python 3.8
       pip install -r requirements.txt
 
 ## **Train and Inference speed**:
-This implementation is based on [HRNet-Semantic-Segmentation](https://github.com/HRNet/HRNet-Semantic-Segmentation). Please refer to their repository for installation and dataset preparation.The inference speed is tested on single RTX 3090 or RTX4090. BDD10 has not been implemented in the above link. The dataset storage format is as follows. Download link: [web page](https://bdd-data.berkeley.edu/)
+This implementation is based on [HRNet-Semantic-Segmentation](https://github.com/HRNet/HRNet-Semantic-Segmentation). Please refer to their repository for installation and dataset preparation.The inference speed is tested on single RTX 3090 or RTX4090. BDD10K has not been implemented in the above link. The dataset storage format is as follows. Download link: [web page](https://bdd-data.berkeley.edu/)
 
 - bdd
   - seg
