@@ -17,7 +17,7 @@ DATASET:
 MODEL:
   NAME: 'dsnet_m'
   NUM_OUTPUTS: 2
-  PRETRAINED: "/root/output/bdd/dhs_base_bdd/best_dhs_base_bdd_ 0.642784.pth.tar"
+  PRETRAINED: ""
 LOSS:
   USE_OHEM: true
   OHEMTHRES: 0.9
