@@ -1,3 +1,6 @@
+# ------------------------------------------------------------------------------
+# Modified based on https://github.com/HRNet/HRNet-Semantic-Segmentation and https://github.com/XuJiacong/PIDNet
+# ------------------------------------------------------------------------------
 import logging
 import os
 import time
