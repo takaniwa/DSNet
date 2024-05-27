@@ -1,3 +1,6 @@
+# ------------------------------------------------------------------------------
+# Modified based on https://github.com/XuJiacong/PIDNet
+# ------------------------------------------------------------------------------
 import os
 import numpy as np
 from PIL import Image
