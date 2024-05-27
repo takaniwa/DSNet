@@ -1,6 +1,4 @@
-# ------------------------------------------------------------------------------
-# Modified based on https://github.com/HRNet/HRNet-Semantic-Segmentation
-# ------------------------------------------------------------------------------
+
 import cv2
 import numpy as np
 import random
