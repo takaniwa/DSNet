@@ -11,7 +11,19 @@ python 3.8
       
       pip install -r requirements.txt
 
-# **Overview**: 
+## **Highlight**
+<table border="0">
+<tr>
+    <td>
+    <img src="./figs/miou_vs_params.png" width="90%" />
+    </td>
+    <td>
+    <img src="./figs/miou_vs_flops.png" width="90%" />
+    </td>
+</tr>
+</table>
+
+## **Overview**: 
 <p align="center">
   <img src="figs/model.pdf" alt="overview-of-our-method" width="800"/></br>
   <span align="center">An overview of the basic architecture of our proposed DSNet. </span> 
