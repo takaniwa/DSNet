@@ -29,6 +29,9 @@ python 3.8
 </tr>
 </table>
 
+• We revisited the design of atrous convolutions in CNNs,and explored three empirical guidelines for atrous convolution. Based on the above guidelines, we proposed a novel Dual-branch network.
+
+• DSNet achieves a new state-of-the-art trade-off between accuracy and speed on ADE20K, Cityscapes,and BDD10K. 
 
 
 ## **Overview**: 
