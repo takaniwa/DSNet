@@ -49,12 +49,12 @@ python 3.8
 <tr>
     <td>
         <figure>
-            <img src="./figs/msa.jpg" width="90%" />
+            <img src="./figs/msa.jpg" width="100%" />
         </figure>
     </td>
     <td>
         <figure>
-            <img src="./figs/msaf.jpg" width="90%" />
+            <img src="./figs/msaf.jpg" width="100%" />
         </figure>
     </td>
 </tr>
