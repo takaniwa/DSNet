@@ -18,7 +18,7 @@ python 3.8
     <img src="./figs/params vs acc.jpg" width="90%" />
     </td>
     <td>
-    <img src="./figs/fps.png" width="90%" />
+    <img src="./figs/fps.jpg" width="90%" />
     </td>
 </tr>
 </table>
