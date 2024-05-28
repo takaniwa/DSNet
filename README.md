@@ -1,4 +1,4 @@
-# DSNet
+# DSNet：A Novel Way to Use Atrous Convolutions in Semantic Segmentation
 a novel real-time model in semantic segmentation
 This is the implementation for DSNet. 
 
