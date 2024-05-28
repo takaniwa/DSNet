@@ -15,17 +15,17 @@ python 3.8
 <table border="0">
 <tr>
     <td>
-    <img src="./figs/miou_vs_params.png" width="90%" />
+    <img src="./figs/params vs acc.jpg" width="90%" />
     </td>
     <td>
-    <img src="./figs/miou_vs_flops.png" width="90%" />
+    <img src="./figs/fps.png" width="90%" />
     </td>
 </tr>
 </table>
 
 ## **Overview**: 
 <p align="center">
-  <img src="figs/model.pdf" alt="overview-of-our-method" width="800"/></br>
+  <img src="figs/model.jpg" alt="overview-of-our-method" width="800"/></br>
   <span align="center">An overview of the basic architecture of our proposed DSNet. </span> 
 </p>
 
