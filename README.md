@@ -40,6 +40,26 @@ python 3.8
   <span align="center">An overview of the basic architecture of our proposed DSNet. </span> 
 </p>
 
+<p align="center">
+  <img src="figs/mafcb.jpg"  width="800"/></br>
+  <span align="center">Diagram of Multi-Scale Fusion Atrous Convolutional Block (MFACB). </span> 
+</p>
+
+<table border="0">
+<tr>
+    <td>
+        <figure>
+            <img src="./figs/msa.jpg" width="90%" />
+        </figure>
+    </td>
+    <td>
+        <figure>
+            <img src="./figs/msaf.jpg" width="90%" />
+        </figure>
+    </td>
+</tr>
+</table>
+
 ## **Train and Inference speed**:
 This implementation is based on [HRNet-Semantic-Segmentation](https://github.com/HRNet/HRNet-Semantic-Segmentation). Please refer to their repository for installation and dataset preparation.The inference speed is tested on single RTX 3090 or RTX4090. BDD10K has not been implemented in the above link. The dataset storage format is as follows. Download link: [web page](https://bdd-data.berkeley.edu/)
 
