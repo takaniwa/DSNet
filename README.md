@@ -15,13 +15,21 @@ python 3.8
 <table border="0">
 <tr>
     <td>
-    <img src="./figs/params vs acc.jpg" width="90%" />
+        <figure>
+            <img src="./figs/params vs acc.jpg" width="90%" />
+            <figcaption style="text-align: center;">Params vs mIOU on Cityscapes val set</figcaption>
+        </figure>
     </td>
     <td>
-    <img src="./figs/fps.jpg" width="90%" />
+        <figure>
+            <img src="./figs/fps.jpg" width="90%" />
+            <figcaption > ADE20K</figcaption>
+        </figure>
     </td>
 </tr>
 </table>
+
+
 
 ## **Overview**: 
 <p align="center">
