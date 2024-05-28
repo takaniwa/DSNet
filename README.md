@@ -2,7 +2,7 @@
 a novel real-time model in semantic segmentation
 This is the implementation for DSNet. 
 
-## **environment**: 
+## **Environment**: 
 PyTroch 1.10 
 
 python 3.8
@@ -10,6 +10,12 @@ python 3.8
 4\*RTX4090 or 8\*RTX4090 
       
       pip install -r requirements.txt
+
+# **Overview**: 
+<p align="center">
+  <img src="figs/model.pdf" alt="overview-of-our-method" width="800"/></br>
+  <span align="center">An overview of the basic architecture of our proposed DSNet. </span> 
+</p>
 
 ## **Train and Inference speed**:
 This implementation is based on [HRNet-Semantic-Segmentation](https://github.com/HRNet/HRNet-Semantic-Segmentation). Please refer to their repository for installation and dataset preparation.The inference speed is tested on single RTX 3090 or RTX4090. BDD10K has not been implemented in the above link. The dataset storage format is as follows. Download link: [web page](https://bdd-data.berkeley.edu/)
