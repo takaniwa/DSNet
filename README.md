@@ -1,6 +1,6 @@
 # DSNet：A Novel Way to Use Atrous Convolutions in Semantic Segmentation
 a novel real-time model in semantic segmentation
-This is the implementation for DSNet. This paper was accepted by CVPR 2024 Workshop on Computer Vision in the Wild.
+This is the implementation for DSNet. This paper was accepted by CVPR 2024 Workshop on Computer Vision in the Wild. DSNetV2 is currently under development......
 
 ## **Environment**: 
 PyTroch 1.10 
