@@ -95,7 +95,7 @@ This implementation is based on [HRNet-Semantic-Segmentation](https://github.com
   
   BDD10K: 64.6%mIOU： [ Baidu drive](https://pan.baidu.com/s/13Hvi6he0hZgciff7tBUo0A?pwd=a123), [google drive]( https://drive.google.com/file/d/1IqMornjPHMVYHWdGhl-Jr1J4FvcZotoj/view?usp=sharing)
                       
-  Camvid(pretrained on Cityscapes train set)TOP 1 Real-time model on Camvid test set: 83.32%mIOU: [ Baidu drive](https://pan.baidu.com/s/1Q-e-_s-vsgn14S8GoBoTlA?pwd=a123), [google drive](https://drive.google.com/file/d/141889Jei9rcgJ9wSiFF8rNvUDUiV8SqI/view?usp=sharing)           
+  Camvid(pretrained on Cityscapes train set): 83.32%mIOU: [ Baidu drive](https://pan.baidu.com/s/1Q-e-_s-vsgn14S8GoBoTlA?pwd=a123), [google drive](https://drive.google.com/file/d/141889Jei9rcgJ9wSiFF8rNvUDUiV8SqI/view?usp=sharing)           
 
   Cityscapes : 82.0%mIOU:[google drive](https://drive.google.com/file/d/17SpPO3tsusB9JngjfnJFWzxffCoQRc9z/view?usp=sharing)
 ### DSNet:
