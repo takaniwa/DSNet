@@ -87,6 +87,21 @@ This implementation is based on [HRNet-Semantic-Segmentation](https://github.com
 
       python DSNet/models/speed/dsnet_speed.py
 
+
+## Citation
+
+If you think this work is useful, please cite our paper:
+```
+@misc{guo2024dsnet,
+      title={DSNet: A Novel Way to Use Atrous Convolutions in Semantic Segmentation}, 
+      author={Zilu Guo and Liuyang Bian and Xuan Huang and Hu Wei and Jingyu Li and Huasheng Ni},
+      year={2024},
+      eprint={2406.03702},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
+
 ## Weight
 ### DSNet-Base:
   
