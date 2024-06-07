@@ -80,13 +80,14 @@ This implementation is based on [HRNet-Semantic-Segmentation](https://github.com
       - val
 
 ### Train
-      
-      python -m torch.distributed.launch --nproc_per_node=4 DSNet/tools/train.py
+```
+python -m torch.distributed.launch --nproc_per_node=4 DSNet/tools/train.py
+```
 
 ### Inference speed
-
-      python DSNet/models/speed/dsnet_speed.py
-
+```
+python DSNet/models/speed/dsnet_speed.py
+```
 
 ## Citation
 
