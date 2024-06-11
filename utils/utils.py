@@ -1,250 +1,161 @@
 # ------------------------------------------------------------------------------
 # Modified based on https://github.com/HRNet/HRNet-Semantic-Segmentation and https://github.com/XuJiacong/PIDNet
 # ------------------------------------------------------------------------------
-import logging
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 import os
+import logging
 import time
+from pathlib import Path
 
 import numpy as np
-from tqdm import tqdm
+import math
 
+from math import cos, pi
 import torch
-from torch.nn import functional as F
+import torch.nn as nn
+import torch.nn.functional as F
+from configs import config
 
-from utils.utils import AverageMeter
-from utils.utils import get_confusion_matrix
-from utils.utils import adjust_learning_rate
+class FullModel(nn.Module):
 
-import utils.distributed as dist
+    def __init__(self, model, sem_loss, ce_loss):
+        super(FullModel, self).__init__()
+        self.model = model
+        self.sem_loss = sem_loss
+        self.ce_loss = ce_loss
 
-def reduce_tensor(inp):
-    """
-    Reduce the loss from all processes so that 
-    process with rank 0 has the averaged results.
-    """
-    world_size = dist.get_world_size()
-    if world_size < 2:
-        return inp
-    with torch.no_grad():
-        reduced_inp = inp
-        torch.distributed.reduce(reduced_inp, dst=0)
-    return reduced_inp / world_size
+    def pixel_acc(self, pred, label):
+        _, preds = torch.max(pred, dim=1)
+        valid = (label >= 0).long()
+        acc_sum = torch.sum(valid * (preds == label).long())
+        pixel_sum = torch.sum(valid)
+        acc = acc_sum.float() / (pixel_sum.float() + 1e-10)
+        return acc
 
-def train(config, epoch, num_epoch, epoch_iters, base_lr,
-          num_iters, trainloader, optimizer, model, writer_dict):
-    # Training
-    model.train()
+    def forward(self, inputs, labels, *args, **kwargs):
 
-    batch_time = AverageMeter()
-    ave_loss = AverageMeter()
-    ave_acc  = AverageMeter()
-    avg_sem_loss1 = AverageMeter()
-    avg_sem_loss2 = AverageMeter()
-    avg_sem_loss3 = AverageMeter()
-    boundary_loss = AverageMeter()
-    avg_bce_loss = AverageMeter()
+        outputs = self.model(inputs)
+        ph, pw = outputs[0].size(2), outputs[0].size(3)
+        h, w = labels.size(1), labels.size(2)
+        if ph != h or pw != w:
+            for i in range(len(outputs)):
+                outputs[i] = F.interpolate(outputs[i], size=(
+                    h, w), mode='bilinear', align_corners=config.MODEL.ALIGN_CORNERS)
 
-    tic = time.time()
-    cur_iters = epoch*epoch_iters
-    writer = writer_dict['writer']
-    global_steps = writer_dict['train_global_steps']
-    record = []
-    for i_iter, batch in enumerate(trainloader, 0):
-        images, labels, _, _ = batch
-        images = images.cuda()
-        labels = labels.long().cuda()
-        
+        acc  = self.pixel_acc(outputs[1], labels)
 
-        losses, outputs, acc, loss_list = model(images, labels)
-        loss = losses.mean()
-        acc  = acc.mean()
 
-        if dist.is_distributed():
-            reduced_loss = reduce_tensor(loss)
+        loss_1 = self.sem_loss(outputs[1], labels) 
+        loss_2 = self.ce_loss(outputs[0], labels)  
+        loss_3 = self.ce_loss(outputs[2], labels) 
+
+        loss_sb = loss_3
+        loss = 0.6*loss_1 + 0.2*loss_2 + 0.2*loss_3
+
+        return torch.unsqueeze(loss, 0), outputs, acc, [loss_1, loss_2, loss_3, loss_sb]
+
+
+class AverageMeter(object):
+    """Computes and stores the average and current value"""
+
+    def __init__(self):
+        self.initialized = False
+        self.val = None
+        self.avg = None
+        self.sum = None
+        self.count = None
+
+    def initialize(self, val, weight):
+        self.val = val
+        self.avg = val
+        self.sum = val * weight
+        self.count = weight
+        self.initialized = True
+
+    def update(self, val, weight=1):
+        if not self.initialized:
+            self.initialize(val, weight)
         else:
-            reduced_loss = loss
+            self.add(val, weight)
 
-        model.zero_grad()
-        loss.backward()
-        optimizer.step()
-        # scheduler.step()
-        # measure elapsed time
-        batch_time.update(time.time() - tic)
-        tic = time.time()
+    def add(self, val, weight):
+        self.val = val
+        self.sum += val * weight
+        self.count += weight
+        self.avg = self.sum / self.count
 
-        # update average loss
-        ave_loss.update(reduced_loss.item())
-        ave_acc.update(acc.item())
+    def value(self):
+        return self.val
 
-        avg_sem_loss1.update(loss_list[0].mean().item())   # 最终图像的loss
-        avg_sem_loss2.update(loss_list[1].mean().item())   # 第一个监督信号
-        avg_sem_loss3.update(loss_list[2].mean().item())   # 第二个监督信号
-        boundary_loss.update(loss_list[3].mean().item())   # 第三个监督信号
+    def average(self):
+        return self.avg
 
-        lr = adjust_learning_rate(optimizer,
-                                  base_lr,
-                                  num_iters,
-                                  i_iter+cur_iters)
-        if i_iter % config.PRINT_FREQ == 0 and dist.get_rank() == 0:
-            msg = 'Epoch: [{}/{}] Iter:[{}/{}], Time: {:.2f}, ' \
-                  'lr: {}, Loss: {:.6f}, Acc:{:.6f}, Semantic loss: {:.6f}, loss1: {:.6f}, loss2: {:.6f}, SB loss: {:.6f}' .format(
-                      epoch, num_epoch, i_iter, epoch_iters,
-                      batch_time.average(), [x['lr'] for x in optimizer.param_groups], ave_loss.average(),
-                      ave_acc.average(), avg_sem_loss1.average(), avg_sem_loss2.average(), avg_sem_loss3.average(), boundary_loss.average())
-            logging.info(msg)
+def create_logger(cfg, cfg_name, phase='train'):
+    root_output_dir = Path(cfg.OUTPUT_DIR)
+    if not root_output_dir.exists():
+        print('=> creating {}'.format(root_output_dir))
+        root_output_dir.mkdir()
 
-        record.append(loss)
+    dataset = cfg.DATASET.DATASET
+    model = cfg.MODEL.NAME
+    cfg_name = os.path.basename(cfg_name).split('.')[0]
 
+    final_output_dir = root_output_dir / dataset / cfg_name
 
+    print('=> creating {}'.format(final_output_dir))
+    final_output_dir.mkdir(parents=True, exist_ok=True)
 
-    
-    writer.add_scalar('train_loss', ave_loss.average(), global_steps)
-    writer_dict['train_global_steps'] = global_steps + 1
+    time_str = time.strftime('%Y-%m-%d-%H-%M')
+    log_file = '{}_{}_{}.log'.format(cfg_name, time_str, phase)
+    final_log_file = final_output_dir / log_file
+    head = '%(asctime)-15s %(message)s'
+    logging.basicConfig(filename=str(final_log_file),
+                        format=head)
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    console = logging.StreamHandler()
+    logging.getLogger('').addHandler(console)
 
-def validate(config, testloader, model, writer_dict):
-    model.eval()
-    ave_loss = AverageMeter()
-    pixel_acc = 0
-    nums = config.MODEL.NUM_OUTPUTS
-    confusion_matrix = np.zeros(
-        (config.DATASET.NUM_CLASSES, config.DATASET.NUM_CLASSES))
-    confusion_matrix2 = np.zeros(
-        (config.DATASET.NUM_CLASSES, config.DATASET.NUM_CLASSES))
-    mean_loss = 0
-    with torch.no_grad():
-        for idx, batch in enumerate(testloader):
-            image, label, _, _ = batch
-            size = label.size()
-            image = image.cuda()
-            label = label.long().cuda()
-            # bd_gts = bd_gts.float().cuda()
+    tensorboard_log_dir = Path(cfg.LOG_DIR) / dataset / model / \
+            (cfg_name + '_' + time_str)
+    print('=> creating {}'.format(tensorboard_log_dir))
+    tensorboard_log_dir.mkdir(parents=True, exist_ok=True)
 
-            losses, pred, _, _ = model(image, label)
-            # pred[] = pred[1]
-            if not isinstance(pred, (list, tuple)):
-                pred = [pred]   # 直接跳过
+    return logger, str(final_output_dir), str(tensorboard_log_dir)
 
-            confusion_matrix += get_confusion_matrix(
-                label,
-                pred[1],
-                size,
-                config.DATASET.NUM_CLASSES,
-                config.TRAIN.IGNORE_LABEL
-            )
+def get_confusion_matrix(label, pred, size, num_class, ignore=-1):
+    """
+    Calcute the confusion matrix by given label and pred
+    """
+    output = pred.cpu().numpy().transpose(0, 2, 3, 1)
+    seg_pred = np.asarray(np.argmax(output, axis=3), dtype=np.uint8)
+    seg_gt = np.asarray(
+    label.cpu().numpy()[:, :size[-2], :size[-1]], dtype=np.int64)
 
+    ignore_index = seg_gt != ignore
+    seg_gt = seg_gt[ignore_index]
+    seg_pred = seg_pred[ignore_index]
 
+    index = (seg_gt * num_class + seg_pred).astype('int32')
+    label_count = np.bincount(index)
+    confusion_matrix = np.zeros((num_class, num_class))
 
-            loss = losses.mean()
-            if dist.is_distributed():
-                reduced_loss = reduce_tensor(loss)
-            else:
-                reduced_loss = loss
-            ave_loss.update(reduced_loss.item())
+    for i_label in range(num_class):
+        for i_pred in range(num_class):
+            cur_index = i_label * num_class + i_pred
+            if cur_index < len(label_count):
+                confusion_matrix[i_label,
+                                 i_pred] = label_count[cur_index]
+    return confusion_matrix
 
+def adjust_learning_rate(optimizer, base_lr, max_iters, 
+        cur_iters, power=0.9, nbb_mult=10):
+    lr = base_lr*((1-float(cur_iters)/max_iters)**(power))
+    optimizer.param_groups[0]['lr'] = lr
+    if len(optimizer.param_groups) == 2:
+        optimizer.param_groups[1]['lr'] = lr * nbb_mult
+    return lr
 
-    if dist.is_distributed():
-        confusion_matrix = torch.from_numpy(confusion_matrix).cuda()
-        reduced_confusion_matrix = reduce_tensor(confusion_matrix)
-        confusion_matrix = reduced_confusion_matrix.cpu().numpy()
-        
-
-
-    pos = confusion_matrix.sum(1)
-    res = confusion_matrix.sum(0)
-    tp = np.diag(confusion_matrix)
-    pixel_acc = tp.sum()/pos.sum()
-    IoU_array = (tp / np.maximum(1.0, pos + res - tp))
-    mean_IoU = IoU_array.mean()
-
-    if dist.get_rank() <= 0:
-        logging.info('acc:{} '.format(pixel_acc))
-        logging.info('{} {}'.format(IoU_array, mean_IoU))
-
-    writer = writer_dict['writer']
-    global_steps = writer_dict['valid_global_steps']
-    writer.add_scalar('valid_loss', ave_loss.average(), global_steps)
-    writer.add_scalar('valid_mIoU', mean_IoU, global_steps)
-    writer.add_scalar('acc', pixel_acc, global_steps)
-    writer_dict['valid_global_steps'] = global_steps + 1
-    return ave_loss.average(), mean_IoU, IoU_array
-
-
-def testval(config, test_dataset, testloader, model,
-            sv_dir='./', sv_pred=False):
-    model.eval()
-    confusion_matrix = np.zeros((config.DATASET.NUM_CLASSES, config.DATASET.NUM_CLASSES))
-    with torch.no_grad():
-        for index, batch in enumerate(tqdm(testloader)):
-            image, label, _, name = batch
-            size = label.size()
-            pred = test_dataset.single_scale_inference(config, model, image.cuda())
-
-            if pred.size()[-2] != size[-2] or pred.size()[-1] != size[-1]:
-                pred = F.interpolate(
-                    pred, size[-2:],
-                    mode='bilinear', align_corners=config.MODEL.ALIGN_CORNERS
-                )
-            
-            confusion_matrix += get_confusion_matrix(
-                label,
-                pred,
-                size,
-                config.DATASET.NUM_CLASSES,
-                config.TRAIN.IGNORE_LABEL)
-
-            if sv_pred:
-                sv_path = os.path.join(sv_dir, 'val_results')
-                if not os.path.exists(sv_path):
-                    os.mkdir(sv_path)
-                test_dataset.save_pred(pred, sv_path, name)
-
-            pos = confusion_matrix.sum(1)
-            res = confusion_matrix.sum(0)
-            tp = np.diag(confusion_matrix)
-            IoU_array = (tp / np.maximum(1.0, pos + res - tp))
-            mean_IoU = IoU_array.mean()
-
-            if index % 100 == 0:
-                logging.info('processing: %d images' % index)
-                pos = confusion_matrix.sum(1)
-                res = confusion_matrix.sum(0)
-                tp = np.diag(confusion_matrix)
-                IoU_array = (tp / np.maximum(1.0, pos + res - tp))
-                mean_IoU = IoU_array.mean()
-                logging.info('mIoU: %.4f' % (mean_IoU))
-                logging.info(IoU_array)
-
-    pos = confusion_matrix.sum(1)
-    res = confusion_matrix.sum(0)
-    tp = np.diag(confusion_matrix)
-    pixel_acc = tp.sum()/pos.sum()
-    mean_acc = (tp/np.maximum(1.0, pos)).mean()
-    IoU_array = (tp / np.maximum(1.0, pos + res - tp))
-    mean_IoU = IoU_array.mean()
-
-    return mean_IoU, IoU_array, pixel_acc, mean_acc
-
-
-def test(config, test_dataset, testloader, model,
-         sv_dir='./', sv_pred=True):
-    model.eval()
-    with torch.no_grad():
-        for _, batch in enumerate(tqdm(testloader)):
-            image, size, name = batch
-            size = size[0]
-            pred = test_dataset.single_scale_inference(
-                config,
-                model,
-                image.cuda())
-
-            if pred.size()[-2] != size[0] or pred.size()[-1] != size[1]:
-                pred = F.interpolate(
-                    pred, size[-2:],
-                    mode='bilinear', align_corners=config.MODEL.ALIGN_CORNERS
-                )
-                
-            if sv_pred:
-                sv_path = os.path.join(sv_dir,'test_results')
-                if not os.path.exists(sv_path):
-                    os.mkdir(sv_path)
-                test_dataset.save_pred(pred, sv_path, name)
