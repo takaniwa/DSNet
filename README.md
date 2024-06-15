@@ -1,5 +1,5 @@
 # DSNet：A Novel Way to Use Atrous Convolutions in Semantic Segmentation
-a novel real-time model in semantic segmentation. Paper: PIDNet ([PDF]https://arxiv.org/abs/2406.03702))
+a novel real-time model in semantic segmentation. Paper: ([PDF]https://arxiv.org/abs/2406.03702))
 
 This is the implementation for DSNet. This paper was accepted by CVPR 2024 Workshop on Computer Vision in the Wild. DSNetV2 is currently under development... DSNetV2 will offer a better balance between speed and accuracy, as well as a more comprehensive DSNet family ranging from small to large models.
 
