@@ -8,7 +8,7 @@ This is the implementation for DSNet. This paper was accepted by CVPR 2024 Works
 
 
 ## **Environment**: 
-PyTroch 1.10 
+PyTorch 1.10 
 
 python 3.8
 
