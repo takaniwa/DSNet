@@ -1,0 +1,14 @@
+EasyDict
+opencv-python
+shapely
+Cython
+scipy
+pandas
+pyyaml
+json_tricks
+scikit-image
+yacs
+tensorboardX
+tqdm
+ninja
+thop
