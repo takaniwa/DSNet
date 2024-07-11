@@ -274,6 +274,88 @@ def get_pred_model(name, num_classes):
 
     return model
 
+if __name__ == '__main__':
+    # Comment batchnorms here and in model_utils before testing speed since the batchnorm could be integrated into conv operation
+    # (do not comment all, just the batchnorm following its corresponding conv layer)
+    torch.backends.cudnn.benchmark = True
+    device = torch.device('cuda')
+    model = get_pred_model(name='dsnet_head64', num_classes=19)
+    model.eval()
+    model.to(device)
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f"Total parameters: {total_params}")
+    iterations = None
+    # print(model)
+    input = torch.randn(1, 3, 1024, 2048).cuda()
+    # print(model)
+    flops, params = profile(model.to(device), inputs=(input,))
+
+    print("参数量：", params)
+    print("FLOPS：", flops/(1024*1024*1024))
+
+    # 在前向传播之前
+    start_memory = torch.cuda.memory_allocated()
+
+    # 前向传播
+    output = model(input)
+
+    # 在前向传播之后
+    end_memory = torch.cuda.memory_allocated()
+    memory_used = end_memory - start_memory
+
+    print(f"GPU Memory Used: {memory_used / 1024 ** 2} MB")
+
+
+    tt = []
+
+
+    with torch.no_grad():
+        for _ in range(10):
+            model(input)
+
+        if iterations is None:
+            elapsed_time = 0
+            iterations = 100
+            while elapsed_time < 1:
+                torch.cuda.synchronize()
+                torch.cuda.synchronize()
+                t_start = time.time()
+                for _ in range(iterations):
+                    model(input)
+                torch.cuda.synchronize()
+                torch.cuda.synchronize()
+                elapsed_time = time.time() - t_start
+                iterations *= 2
+            FPS = iterations / elapsed_time
+            iterations = int(FPS * 6)
+
+        print('=========Speed Testing=========')
+        torch.cuda.synchronize()
+        torch.cuda.synchronize()
+        t_start = time.time()
+
+        for _ in range(iterations):
+            # torch.cuda.synchronize()
+            model(input)
+            # torch.cuda.synchronize()
+
+
+        torch.cuda.synchronize()
+        torch.cuda.synchronize()
+        t_end = time.time()
+        elapsed_time = t_end- t_start
+        ms = elapsed_time/iterations
+        latency = elapsed_time / iterations * 1000
+
+        print(iterations)
+
+    torch.cuda.empty_cache()
+    FPS = 1000 / latency
+    print(FPS)
+    # print(tt)
+    print(ms)
+
+
 
 
 

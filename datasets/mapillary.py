@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------------------
+# Modified based on https://github.com/HRNet/HRNet-Semantic-Segmentation and https://github.com/XuJiacong/PIDNet
+# ------------------------------------------------------------------------------
+
 import os
 import numpy as np
 from PIL import Image

@@ -6,5 +6,6 @@ from __future__ import print_function
 from .cityscapes import Cityscapes as cityscapes
 from .camvid import CamVid as camvid
 from .mapillary import Mapillary as mapillary
+from .cocostuff import COCOStuff as cocostuff
 from .bdd10k import BDD as bdd
 from .ade20k import ADE20K as ade20k

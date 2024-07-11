@@ -1,6 +1,7 @@
 # ------------------------------------------------------------------------------
-# Modified based on https://github.com/HRNet/HRNet-Semantic-Segmentation
+# Modified based on https://github.com/HRNet/HRNet-Semantic-Segmentation and https://github.com/XuJiacong/PIDNet
 # ------------------------------------------------------------------------------
+
 import cv2
 import numpy as np
 import random
@@ -77,14 +78,14 @@ class BaseDataset(data.Dataset):
 
     def multi_scale_aug(self, image, label=None,
                         rand_scale=1, rand_crop=True):
-        long_size = np.int(self.base_size * rand_scale + 0.5)
+        long_size = np.int32(self.base_size * rand_scale + 0.5)
         h, w = image.shape[:2]
         if h > w:
             new_h = long_size
-            new_w = np.int(w * long_size / h + 0.5)
+            new_w = np.int32(w * long_size / h + 0.5)
         else:
             new_w = long_size
-            new_h = np.int(h * long_size / w + 0.5)
+            new_h = np.int32(h * long_size / w + 0.5)
 
         image = cv2.resize(image, (new_w, new_h),
                            interpolation=cv2.INTER_LINEAR)
@@ -108,10 +109,10 @@ class BaseDataset(data.Dataset):
         h, w = image.shape[:2]
         if h < w:
             new_h = short_length
-            new_w = np.int(w * short_length / h + 0.5)
+            new_w = np.int32(w * short_length / h + 0.5)
         else:
             new_w = short_length
-            new_h = np.int(h * short_length / w + 0.5)        
+            new_h = np.int32(h * short_length / w + 0.5)        
         image = cv2.resize(image, (new_w, new_h),
                            interpolation=cv2.INTER_LINEAR)
         pad_w, pad_h = 0, 0

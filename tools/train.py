@@ -1,6 +1,7 @@
 # ------------------------------------------------------------------------------
 # Modified based on https://github.com/HRNet/HRNet-Semantic-Segmentation and https://github.com/XuJiacong/PIDNet
 # ------------------------------------------------------------------------------
+
 import argparse
 import os
 import pprint
@@ -33,7 +34,7 @@ def parse_args():
     
     parser.add_argument('--cfg',
                         help='experiment configure file name',
-                        default="/root/autodl-tmp/DSNet/configs/cityscapes/dsnet_cityscapes.yaml",
+                        default="/root/autodl-tmp/DSNet/configs/ade20k/ds_ade20k_train.yaml",
                         type=str)
     parser.add_argument('--seed', type=int, default=304)    
     parser.add_argument("--local_rank", type=int, default=-1)       
@@ -263,7 +264,7 @@ def main():
                   epoch_iters, base_lr, num_iters,
                   trainloader, optimizer, model, writer_dict)
 
-        if flag_rm == 1 or (epoch % 2 == 0 and epoch <= 150)  or  (epoch>200): 
+        if flag_rm == 1 or (epoch % 2 == 0 and epoch <= 50)  or (epoch % 20 == 0 and epoch > 50 and epoch <= 180)  or (epoch>180 and epoch % 2 == 0) and (epoch>235): 
             valid_loss, mean_IoU, IoU_array = validate(config, 
                         testloader, model, writer_dict)
 

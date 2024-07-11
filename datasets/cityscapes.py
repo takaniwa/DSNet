@@ -2,6 +2,7 @@
 # Modified based on https://github.com/HRNet/HRNet-Semantic-Segmentation and https://github.com/XuJiacong/PIDNet
 # ------------------------------------------------------------------------------
 
+
 import os
 import timeit
 
@@ -102,7 +103,6 @@ class Cityscapes(BaseDataset):
         name = item["name"]
         image = cv2.imread(os.path.join(self.root, 'cityscapes', item["img"]),
                            cv2.IMREAD_COLOR)
-        size = image.shape
         if self.base_size == 1536:
             image = cv2.resize(image, (1536, 768),
                            interpolation=cv2.INTER_LINEAR)
