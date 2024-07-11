@@ -6,7 +6,7 @@ a novel real-time model in semantic segmentation. Paper: ([PDF]https://arxiv.org
 This is the implementation for DSNet. This paper was accepted by CVPR 2024 Workshop on Computer Vision in the Wild. DSNetV2 is currently under development... DSNetV2 will offer a better balance between speed and accuracy, as well as a more comprehensive DSNet family ranging from small to large models.
 
 ```
-git clone -b for_problem2 https://github.com/takaniwa/DSNet.git
+git clone  https://github.com/takaniwa/DSNet.git
 ```
 
 ## **Environment**: 
