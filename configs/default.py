@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# Modified based on https://github.com/HRNet/HRNet-Semantic-Segmentation
+# based on https://github.com/HRNet/HRNet-Semantic-Segmentation and https://github.com/XuJiacong/PIDNet
 # ------------------------------------------------------------------------------
 
 from __future__ import absolute_import
