@@ -5,17 +5,20 @@ a novel real-time model in semantic segmentation. Paper: ([PDF]https://arxiv.org
 
 This is the implementation for DSNet. This paper was accepted by CVPR 2024 Workshop on Computer Vision in the Wild. DSNetV2 is currently under development... DSNetV2 will offer a better balance between speed and accuracy, as well as a more comprehensive DSNet family ranging from small to large models.
 
-
+```
+git clone -b for_problem2 https://github.com/takaniwa/DSNet.git
+```
 
 ## **Environment**: 
 PyTorch 1.10 
 
 python 3.8
 
-4\*RTX4090 or 8\*RTX4090 
-      
-      pip install -r requirements.txt
+4\*RTX4090 or 8\*RTX4090
 
+```
+pip install -r requirements.txt
+```
 ## **Highlight**
 <table border="0">
 <tr>
