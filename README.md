@@ -1,4 +1,5 @@
 # DSNet：A Novel Way to Use Atrous Convolutions in Semantic Segmentation
+## :rocket: If it helps you, click a star! :star: ##
 a novel real-time model in semantic segmentation. Paper: ([PDF]https://arxiv.org/abs/2406.03702))
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/dsnet-a-novel-way-to-use-atrous-convolutions/real-time-semantic-segmentation-on-cityscapes-1)](https://paperswithcode.com/sota/real-time-semantic-segmentation-on-cityscapes-1?p=dsnet-a-novel-way-to-use-atrous-convolutions) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/dsnet-a-novel-way-to-use-atrous-convolutions/semantic-segmentation-on-camvid)](https://paperswithcode.com/sota/semantic-segmentation-on-camvid?p=dsnet-a-novel-way-to-use-atrous-convolutions) 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/dsnet-a-novel-way-to-use-atrous-convolutions/semantic-segmentation-on-bdd100k-val)](https://paperswithcode.com/sota/semantic-segmentation-on-bdd100k-val?p=dsnet-a-novel-way-to-use-atrous-convolutions)
