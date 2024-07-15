@@ -99,13 +99,11 @@ python DSNet/models/speed/dsnet_speed.py
 
 If you think this work is useful, please cite our paper:
 ```
-@misc{guo2024dsnet,
-      title={DSNet: A Novel Way to Use Atrous Convolutions in Semantic Segmentation}, 
-      author={Zilu Guo and Liuyang Bian and Xuan Huang and Hu Wei and Jingyu Li and Huasheng Ni},
-      year={2024},
-      eprint={2406.03702},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@article{guo2024dsnet,
+  title={DSNet: A Novel Way to Use Atrous Convolutions in Semantic Segmentation},
+  author={Guo, Zilu and Bian, Liuyang and Huang, Xuan and Wei, Hu and Li, Jingyu and Ni, Huasheng},
+  journal={arXiv preprint arXiv:2406.03702},
+  year={2024}
 }
 ```
 
