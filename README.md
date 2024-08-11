@@ -4,11 +4,14 @@ a novel real-time model in semantic segmentation. Paper: ([PDF]https://arxiv.org
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/dsnet-a-novel-way-to-use-atrous-convolutions/real-time-semantic-segmentation-on-cityscapes-1)](https://paperswithcode.com/sota/real-time-semantic-segmentation-on-cityscapes-1?p=dsnet-a-novel-way-to-use-atrous-convolutions) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/dsnet-a-novel-way-to-use-atrous-convolutions/semantic-segmentation-on-camvid)](https://paperswithcode.com/sota/semantic-segmentation-on-camvid?p=dsnet-a-novel-way-to-use-atrous-convolutions) 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/dsnet-a-novel-way-to-use-atrous-convolutions/semantic-segmentation-on-bdd100k-val)](https://paperswithcode.com/sota/semantic-segmentation-on-bdd100k-val?p=dsnet-a-novel-way-to-use-atrous-convolutions)
 
-This is the implementation for DSNet. This paper was accepted by CVPR 2024 Workshop on Computer Vision in the Wild. DSNetV2 is currently under development... DSNetV2 will offer a better balance between speed and accuracy, as well as a more comprehensive DSNet family ranging from small to large models.
+This is the implementation for DSNet. DSNetV2 is currently under development... DSNetV2 will offer a better balance between speed and accuracy, as well as a more comprehensive DSNet family ranging from small to large models.
 
 ```
 git clone  https://github.com/takaniwa/DSNet.git
 ```
+
+## News 2024/7/28
+We extended the MSAF and MSA experiments for classification by applying them to models like ResNet18. On the ImageNet1K task, this led to a 3.3% accuracy improvement with only a 1% increase in computational cost!We will include a more detailed explanation of this module in our paper for submission to a high-quality journal.
 
 ## **Environment**: 
 PyTorch 1.10 
