@@ -11,7 +11,7 @@ git clone  https://github.com/takaniwa/DSNet.git
 ```
 
 ## News 2024/7/28
-We extended the MSAF and MSA experiments for classification by applying them to models like ResNet18. On the ImageNet1K task, this led to a 3.3% accuracy improvement with only a 1% increase in computational cost!We will include a more detailed explanation of this module in our paper for submission to a high-quality journal.
+We extended the MSAF and MSA experiments for classification by applying them to models like ResNet18. On the ImageNet1K task, this led to a 3.3% accuracy improvement with only a 1% increase in computational cost! We will include a more detailed explanation of this module in our paper for submission to a high-quality journal.
 
 ## **Environment**: 
 PyTorch 1.10 
