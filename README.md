@@ -98,17 +98,6 @@ python -m torch.distributed.launch --nproc_per_node=4 DSNet/tools/train.py
 python DSNet/models/speed/dsnet_speed.py
 ```
 
-## Citation
-
-If you think this work is useful, please cite our paper:
-```
-@article{guo2024dsnet,
-  title={DSNet: A Novel Way to Use Atrous Convolutions in Semantic Segmentation},
-  author={Guo, Zilu and Bian, Liuyang and Huang, Xuan and Wei, Hu and Li, Jingyu and Ni, Huasheng},
-  journal={arXiv preprint arXiv:2406.03702},
-  year={2024}
-}
-```
 
 ## Weight
 ### DSNet-Base:
